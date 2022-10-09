@@ -50,6 +50,14 @@ export function Post(props) {
     setNewCommentText(event.target.value);
   }
 
+  function deleteComment(commentToDelete) {
+    // imutabilidade -> as variáveis não podem ser alteradas, nós precisamos criar uma nova variável
+    const commentWithouDeletedOne = comments.filter(
+      (comment) => comment !== commentToDelete
+    );
+    setComments(commentWithouDeletedOne);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -71,10 +79,10 @@ export function Post(props) {
       <div className={styles.content}>
         {props.content.map((content, index) => {
           if (content.type === "paragraph") {
-            return <p key={index}>{content.content}</p>;
+            return <p key={content.content}>{content.content}</p>;
           } else if (content.type === "link") {
             return (
-              <a key={index} href={content.content}>
+              <a key={content.content} href={content.content}>
                 {content.content}
               </a>
             );
@@ -88,6 +96,10 @@ export function Post(props) {
           value={newCommentText}
           placeholder="Deixe um comentário"
           onChange={handleNewCommentChange}
+          onInvalid={(event) => {
+            event.target.setCustomValidity("O comentário não pode ser vazio");
+          }}
+          required
         />
         <footer>
           <button type="submit">Enviar</button>
@@ -95,9 +107,21 @@ export function Post(props) {
       </form>
       <div className={styles.commentList}>
         {comments.map((comment) => (
-          <Comment content={comment} />
+          <Comment
+            key={comment}
+            content={comment}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>
   );
 }
+
+//key é uma propriedade especial do react, que serve para identificar cada elemento de uma lista
+
+// 3 momentos de atualização de um componente
+
+// 1 - Quando o componente é exibido em tela
+// 2 - Quando o estado do componente é alterado
+// 3 - Quando o pai do componente é re-renderizado
