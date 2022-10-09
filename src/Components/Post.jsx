@@ -11,6 +11,7 @@ import { useState } from "react";
 
 export function Post(props) {
   const [comments, setComments] = useState(["Post muito bacana"]);
+  const [newCommentText, setNewCommentText] = useState("");
   const publishedDateFormatted = format(
     props.publishedAt,
     "d 'de' MMMM 'às' HH:mm'h'",
@@ -30,11 +31,23 @@ export function Post(props) {
   //   minute: "2-digit",
   // }).format(props.publishedAt);
 
+  /**Programação Imperativa - O que fazer, Passo a passo*/
+  // function handleCreateNewComment(event) {
+  //   event.preventDefault();
+  //   const newComment = event.target.comment.value;
+  //   setComments([...comments, newComment]);
+  //   event.target.reset();
+  // }
+
+  /**Programação Declarativo - O que queremos*/
   function handleCreateNewComment(event) {
     event.preventDefault();
-    const newComment = event.target.comment.value;
-    setComments([...comments, newComment]);
-    event.target.reset();
+    setComments([...comments, newCommentText]);
+    setNewCommentText("");
+  }
+
+  function handleNewCommentChange(event) {
+    setNewCommentText(event.target.value);
   }
 
   return (
@@ -70,7 +83,12 @@ export function Post(props) {
       </div>
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea name="comment" placeholder="Deixe um comentário" />
+        <textarea
+          name="comment"
+          value={newCommentText}
+          placeholder="Deixe um comentário"
+          onChange={handleNewCommentChange}
+        />
         <footer>
           <button type="submit">Enviar</button>
         </footer>
