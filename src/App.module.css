@@ -8,3 +8,20 @@
     /* Ficar alinhado ao topo */
     align-items: flex-start;
 }
+
+@media (max-width: 768px) {
+    html {
+        font-size: 87.5%;
+        /*Mobile*/
+    }
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*
+14 x100 / 16 = 87.5%
+16 => 100%
+14  => 87.5%'
+*/
