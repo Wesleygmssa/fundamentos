@@ -9,8 +9,15 @@ export function Comment(props) {
     props.onDeleteComment(props.content);
   }
 
+  //Modelo 1
   function handleLikeComment() {
-    setLikeCount(likeCount + 1);
+    const newLikeCount = likeCount + 1;
+    setLikeCount(newLikeCount);
+  }
+  //Modelo 1
+  function handleLikeComment() {
+    //Acessando o valor mais recente do estado
+    setLikeCount((state) => state + 1);
   }
 
   return (
