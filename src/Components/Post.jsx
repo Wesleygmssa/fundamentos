@@ -58,6 +58,11 @@ export function Post(props) {
     setComments(commentWithouDeletedOne);
   }
 
+  function handleNewCommentInvalid(event) {
+    event.target.setCustomValidity("O comentário não pode ser vazio");
+  }
+  const isNewCommentValid = newCommentText.trim().length > 0;
+
   return (
     <article className={styles.post}>
       <header>
@@ -96,13 +101,13 @@ export function Post(props) {
           value={newCommentText}
           placeholder="Deixe um comentário"
           onChange={handleNewCommentChange}
-          onInvalid={(event) => {
-            event.target.setCustomValidity("O comentário não pode ser vazio");
-          }}
+          onInvalid={handleNewCommentInvalid}
           required
         />
         <footer>
-          <button type="submit">Enviar</button>
+          <button type="submit" disabled={isNewCommentValid}>
+            Enviar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
